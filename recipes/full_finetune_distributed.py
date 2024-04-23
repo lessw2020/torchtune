@@ -194,12 +194,14 @@ class FullFinetuneRecipeDistributed(FTRecipeInterface):
 
         # _setup_optimizer should take in ckpt_dict only if training is resumed from
         # checkpoint. Transforming the opt state dict is handled by this method
-        self._optimizer = self._setup_optimizer(
+        '''self._optimizer = self._setup_optimizer(
             cfg_optimizer=cfg.optimizer,
             opt_state_dict=ckpt_dict[utils.OPT_KEY]
             if self._resume_from_checkpoint
             else None,
         )
+        '''
+        self._optimizer = AdamWFused_QuantFour(self._model.parameters(), lr=2e-05)
 
         self._loss_fn = config.instantiate(cfg.loss)
 
