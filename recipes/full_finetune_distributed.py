@@ -32,8 +32,7 @@ from torchtune.recipe_interfaces import FTRecipeInterface
 from torchtune.utils.activations import apply_selective_activation_checkpointing
 
 from tqdm import tqdm
-
-
+from quantfour import AdamWFused_QuantFour
 log = utils.get_logger("DEBUG")
 
 
@@ -333,6 +332,8 @@ class FullFinetuneRecipeDistributed(FTRecipeInterface):
         Set up the optimizer. This method also handles transforing the state dict
         for FSDP.
         """
+        print(f"{cfg_optimizer=}")
+        # assert False, "check optimizer"
         optimizer = config.instantiate(cfg_optimizer, self._model.parameters())
 
         if opt_state_dict:
